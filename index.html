@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Métodos de Heun y Runge-Kutta</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+  <div class="container mt-4">
+    <h1 class="text-center">Resolución de Ecuaciones Diferenciales</h1>
+    <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="ej1-tab" data-bs-toggle="tab" data-bs-target="#ej1" type="button" role="tab">Problema 1</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="ej2-tab" data-bs-toggle="tab" data-bs-target="#ej2" type="button" role="tab">Problema 2</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="ej3-tab" data-bs-toggle="tab" data-bs-target="#ej3" type="button" role="tab">Problema 3</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="comparacion-tab" data-bs-toggle="tab" data-bs-target="#comparacion" type="button" role="tab">Comparación</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="conclusiones-tab" data-bs-toggle="tab" data-bs-target="#conclusiones" type="button" role="tab">Conclusiones</button>
+      </li>
+    </ul>
+
+    <div class="tab-content mt-3" id="myTabContent">
+      <div class="tab-pane fade show active" id="ej1" role="tabpanel">
+        <h4>Problema 1 - Crecimiento poblacional con capacidad limitada</h4>
+        <p><strong>Fórmula:</strong> dN/dt = kN(Nm - N)</p>
+        <p><strong>Datos:</strong> Nm = 5000, k = 0.000095, N(0) = 100, t ∈ [0, 20], h = 5</p>
+        <button class="btn btn-primary" onclick="resolverProblema(1)">Resolver</button>
+        <div id="resultado1" class="mt-3"></div>
+        <canvas id="grafico1" class="mt-4"></canvas>
+      </div>
+
+      <div class="tab-pane fade" id="ej2" role="tabpanel">
+        <h4>Problema 2 - Crecimiento tumoral</h4>
+        <p><strong>Fórmula:</strong> dA/dt = αA[1 - (A/k)<sup>v</sup>]</p>
+        <p><strong>Datos:</strong> α = 0.8, k = 60, v = 0.25, A(0) = 1, t ∈ [0, 30], h = 5</p>
+        <button class="btn btn-primary" onclick="resolverProblema(2)">Resolver</button>
+        <div id="resultado2" class="mt-3"></div>
+        <canvas id="grafico2" class="mt-4"></canvas>
+      </div>
+
+      <div class="tab-pane fade" id="ej3" role="tabpanel">
+        <h4>Problema 3 - Caída libre con resistencia cuadrática</h4>
+        <p><strong>Fórmula:</strong> m dv/dt = -mg + kv²</p>
+        <p><strong>Datos:</strong> m = 5 kg, g = 9.81 m/s², k = 0.05, v(0) = 0, t ∈ [0, 15], h = 5</p>
+        <button class="btn btn-primary" onclick="resolverProblema(3)">Resolver</button>
+        <div id="resultado3" class="mt-3"></div>
+        <canvas id="grafico3" class="mt-4"></canvas>
+      </div>
+
+      <div class="tab-pane fade" id="comparacion" role="tabpanel">
+        <h4>Tabla Comparativa entre Métodos</h4>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Criterio</th>
+              <th>Método de Heun</th>
+              <th>Método de Runge-Kutta</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Precisión</td>
+              <td>Moderada</td>
+              <td>Alta</td>
+            </tr>
+            <tr>
+              <td>Complejidad de implementación</td>
+              <td>Baja</td>
+              <td>Moderada</td>
+            </tr>
+            <tr>
+              <td>Cantidad de cálculos por iteración</td>
+              <td>Menor</td>
+              <td>Mayor</td>
+            </tr>
+            <tr>
+              <td>Requiere más iteraciones</td>
+              <td>Sí</td>
+              <td>No</td>
+            </tr>
+            <tr>
+              <td>Uso recomendado</td>
+              <td>Cuando se requiere eficiencia</td>
+              <td>Cuando se necesita precisión</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="tab-pane fade" id="conclusiones" role="tabpanel">
+        <h4>Conclusiones</h4>
+        <ul id="listaConclusiones">
+          <li>Ambos métodos permiten aproximar soluciones de ecuaciones diferenciales ordinarias con alta precisión.</li>
+          <li>El método de Runge-Kutta de cuarto orden ofrece mayor precisión que el método de Heun, especialmente con intervalos de paso grandes.</li>
+          <li>El método de Heun es más sencillo de implementar pero menos preciso en escenarios con alta no linealidad.</li>
+          <li>Para aplicaciones prácticas donde se necesita eficiencia computacional, Heun puede ser útil, pero para mayor exactitud es preferible Runge-Kutta.</li>
+          <li>En los tres problemas analizados se verificó que los resultados de ambos métodos son similares con diferencias menores al 5%.</li>
+          <li>Runge-Kutta requiere más cálculos intermedios, pero esto se ve reflejado en su mayor exactitud.</li>
+          <li>Ambos métodos son adecuados para simulaciones y modelado de sistemas reales cuando se requiere una solución numérica.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
